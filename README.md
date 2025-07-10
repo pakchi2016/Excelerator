@@ -20,8 +20,18 @@ dotnet new console -lang F# -o Excelerator
 </configuration>
 ```
 
+ - 上記が準備出来たら以下コマンドを実行し、Excelerator.vbprojに定義を組み込む
+```
+dotnet add package ClosedXML
+```
 
 ## F#でExcelを操作するコード例
+ - Exceleratorフォルダ配下の以下ファイルにコードを記述
+
+```
+Program.fs
+```
+ - 次に、上記ファイルに対して以下コードを入力
 
 ```
 open ClosedXML.Excel
@@ -69,4 +79,25 @@ sourceWs.RowsUsed()
 
 // 全ての処理が終わった後で、一度だけ保存します
 destWb.Save()
+```
+
+ - コード入力完了後、以下コマンドでコードを実行
+
+```
+dotnet run
+```
+
+ - また、毎回必ず同じコードを実行する場合、以下コマンドでスタティックリンク化しておくのもよき
+
+```
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
+```
+
+
+### おまけ
+ - C#でカレントを取得するコード
+
+```
+string exeDirectory = System.AppContext.BaseDirectory;
+string settingFilePath = System.IO.Path.Combine(exeDirectory, "setting.ini");
 ```
